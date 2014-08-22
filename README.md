@@ -1,32 +1,35 @@
 # What will you find here ?
 
-This repository is used to build this vagrant basebox : https://vagrantcloud.com/dduportal/boot2docker
+This repository is used to build the boot2docker iso used by vagrant and
+prepare it to be used with fig and shared folders. It includes the Virtualbox
+Guest Additions so we can create a lightweight dev environment with fig & 
+boot2docker on OSX.
+
+Objectives are:
 - We use boot2docker as vanilla as possible (using official Docker index or building it from boot2docker official github repo)
 - We want to share folders with virtualbox shared folder in vagrant. This is not the best method but usefull anyway.
+- We want to include the Virtual Guest Additions so we can easily share folders from the host system.
 - We want the basebox build process to be as ligthweight as possible.
-
-> See the CHANGELOG.md for history.
 
 # Building the basebox
 
-## Quick build :
-(simple, is'nt it ?)
-
-### On *nix :
+Simply run:
 ```
-bash make.sh (<Github Tag/Changeset> if you want to build all from source)
+bash make.sh
 ```
 
-### On Windows (Partial support, help needed, don't hesitate to pull request!) :
+This will create a boot2docker-vagrant.iso which can be used by boot2docker.
+
+Running
 ```
-make.bat
+VBoxManage sharedfolder add boot2docker-vm -name home -hostpath /Users
 ```
+after `boot2docker init` and before `boot2docker up` will allow you to seamlessly
+use fig on your OSX machine.
 
-## Detailed build :
+Attention: be aware of the security implications of sharing your /Users dir with
+the boot2docker VM. Follow this discussion for more information: https://github.com/boot2docker/boot2docker-cli/issues/202
 
-- First, we'll build the boot2docker iso with some customisations inside thru docker and a Dockerfile. It can take advantages of Docker trusted builds (https://github.com/boot2docker/boot2docker/blob/master/doc/BUILD.md) of boot2docker or build the original image from boot2docker github repo if you provide a git ref. The Dockerfile included will install vbox additions and vagrant stuff directly inside.
+## Credits
 
-- Second, we'll use this custom ISO to build a vagrant basebox, using packer and mitchellh's packer template (https://github.com/mitchellh/boot2docker-vagrant-box).
-
-- Third, we'll run a set of tests for validating the content of the basebox : guarantee stability over updates.
-
+This repository is a combination of Mitchell Hashimoto's https://github.com/mitchellh/boot2docker-vagrant-box and Matthias Kadenbach's https://gist.github.com/mattes/2d0ffd027cb16571895c#file-readme-md, so all credits go to them!
