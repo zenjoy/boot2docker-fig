@@ -2,7 +2,7 @@
 
 This repository is used to build the boot2docker iso used by vagrant and
 prepare it to be used with fig and shared folders. It includes the Virtualbox
-Guest Additions so we can create a lightweight dev environment with fig & 
+Guest Additions so we can create a lightweight dev environment with fig &
 boot2docker on OSX.
 
 Objectives are:
@@ -32,4 +32,4 @@ the boot2docker VM. Follow this discussion for more information: https://github.
 
 ## Credits
 
-This repository is a combination of Mitchell Hashimoto's https://github.com/mitchellh/boot2docker-vagrant-box and Matthias Kadenbach's https://gist.github.com/mattes/2d0ffd027cb16571895c#file-readme-md, so all credits go to them!
+This repository is a combination of work by [Mitchell Hashimoto](https://github.com/mitchellh/boot2docker-vagrant-box), [dduportal](https://github.com/dduportal/boot2docker-vagrant-box) and [Matthias Kadenbach](https://gist.github.com/mattes/2d0ffd027cb16571895c), so all credits go to them!
