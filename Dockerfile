@@ -22,20 +22,10 @@ RUN mkdir -p /vboxguest && \
 
 # Adding freshly built kernel module
 RUN depmod -a -b $ROOTFS $KERNEL_VERSION-tinycore64
-# We need to load the module when b2d is booting.
-RUN echo "modprobe vboxsf" >> $ROOTFS/opt/bootsync.sh
 
-
-####### Vagrant customisation
-
-# This script will :wq
-COPY vagrant-rc-script $ROOTFS/etc/rc.d/vagrant
-RUN chmod +x $ROOTFS/etc/rc.d/vagrant
-
-# We need to  execute rc script when booting
-RUN echo "/etc/rc.d/vagrant" >> $ROOTFS/opt/bootsync.sh
+# Load the module vboxsf and shared folders when b2d is booting.
+RUN echo "modprobe vboxsf && mkdir -v -p /Users && sudo mount -v -t vboxsf  -o uid=0,gid=0 home /Users" >> $ROOTFS/opt/bootsync.sh
 
 #### Build the iso from $ROOTFS
 RUN /make_iso.sh
 CMD ["cat", "boot2docker.iso"]
-

@@ -5,3 +5,4 @@ packer_cache/
 *.iso
 output-*
 boot2docker/
+tmp
